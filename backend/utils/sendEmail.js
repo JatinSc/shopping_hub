@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer')
 
-module.exports = async (email,link,name) => {
+module.exports = async (email, link, name) => {
     try {
         const transporter = nodemailer.createTransport({
             host: process.env.HOST,
@@ -9,7 +9,7 @@ module.exports = async (email,link,name) => {
             secure: Boolean(process.env.SECURE),
             auth: {
                 user: process.env.USER,
-                pass:process.env.PASS
+                pass: process.env.PASS
             }
         })
 
@@ -17,9 +17,13 @@ module.exports = async (email,link,name) => {
             from: process.env.USER,
             to: email,
             subject: "Account Verification",
-            text: `Welcome ${name}`,
             html: `<div>
-            <a href=${link}>Click here to activate your account.</a>
+            <p>Welcome ${name}</p>
+            <p>Click on to the below link to activate your account</p>
+            <a href=${link}>Please verify your account</a>
+            <br/>
+            <p>The link will expire within 1hr from now.</p>
+            <p>If it's expired. Please reverify by going to the profile section on <strong>Shopping Hub</strong> portal</p>
             </div>`
         })
         console.log("email sent successfully")

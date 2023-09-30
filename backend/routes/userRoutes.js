@@ -102,7 +102,7 @@ router.post("/register", async (req, res) => {
 
         // info:- generating link for sending in the email
         //                                         /:id          /verify/ :token
-        const link = `${process.env.BASE_URL}/${newUser._id}/verify/${token.token}`
+        const link = `${process.env.BASE_URL}/user/${newUser._id}/verify/${token.token}`
         //* now we will send email with the verification link
         await sendEmail(newUser.email, link, newUser.firstName)
         console.log(token)
@@ -157,12 +157,15 @@ router.post("/login", async (req, res) => {
         // * it takes id , secret key and we can give expiration duration 
         const payload = { _id: doesUserExists._id }
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
-            expiresIn: '1h'
+            expiresIn: '12h'
         })
         const user = { ...doesUserExists._doc, password: undefined }
         return res
             .status(200)
-            .json({ token, user })
+            .json({
+                message:"Logged in successfully",
+                token, user
+            })
     } catch (error) {
         console.log(error);
         return res
@@ -172,7 +175,8 @@ router.post("/login", async (req, res) => {
     }
 });
 
-router.get('/:id/verify/:token', async (req, res) => {
+
+router.get("/user/:id/verify/:token", async (req, res) => {
     const id = req.params.id
     const token = req.params.token
 
@@ -208,7 +212,8 @@ router.get('/:id/verify/:token', async (req, res) => {
             })
 
     } catch (error) {
-        return res.status(500)
+        return res
+            .status(500)
             .json({
                 message: "internal server error"
             })
@@ -218,7 +223,7 @@ router.get('/:id/verify/:token', async (req, res) => {
 router.get("/me", auth, async (req, res) => {
     return res
         .status(200)
-        .json({ ...req.user._doc });
+        .json({ user:req.user });
 })
 
 module.exports = router

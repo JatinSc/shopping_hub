@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
     userPhoto: { type: String, default: null }, // URL or file path to user's profile photo
     storeLogo: { type: String, default: null }, // URL or file path to the store's logo
     storeName: { type: String, default: null }, // Name of the user's store (if applicable)
+    storeBanner: { type: String, default: null },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
     verified: { type: Boolean, default: false }

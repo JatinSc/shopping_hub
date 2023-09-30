@@ -1,0 +1,14 @@
+.sidebarOpen{
+    width: 300px;
+    min-height: calc(100vh - 50px); // 50px is the height of navbar
+    background-color: rgb(73, 72, 72);
+    transition: ease-in-out 500ms;
+
+}
+
+.sidebarClose{
+    width: 50px;
+    min-height: calc(100vh - 50px); // 50px is the height of navbar
+    background-color: rgb(63, 63, 63);
+     transition: ease-in-out 500ms;
+}

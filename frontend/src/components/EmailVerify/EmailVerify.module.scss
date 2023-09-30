@@ -1,0 +1,18 @@
+.mainContainer {
+  min-height: 100vh;
+  background-color: rgb(255, 255, 255);
+
+  .container {
+    flex-direction: column;
+
+    img {
+        width: 100px;
+        height: 100px;
+        background-color: white;
+    }
+
+    p{
+        color: rgb(69, 69, 69);
+    }
+  }
+}
