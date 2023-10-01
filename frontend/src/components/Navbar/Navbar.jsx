@@ -14,11 +14,11 @@ const Navbar = () => {
       <UseAnimations speed={3.5} className={css.hamBurger} animation={menu2} size={35} onClick={()=> setIsNavOpen(!isNavOpen)}/>
       {user ? (
         <div className={css.profile}>
-          <img src="../../../public/user.png" alt="profile image" onClick={() => navigate('/profile')} />
+          <img src={user?.userPhoto ? user.userPhoto : "../../../public/user.png"} alt="profile image" onClick={() => navigate('/profile')} />
         </div>
       ) : (null)}
     </div>
-  )
+  )       
 }
 
 export default Navbar

@@ -163,7 +163,7 @@ router.post("/login", async (req, res) => {
         return res
             .status(200)
             .json({
-                message:"Logged in successfully",
+                message: "Logged in successfully",
                 token, user
             })
     } catch (error) {
@@ -202,7 +202,7 @@ router.get("/user/:id/verify/:token", async (req, res) => {
         }
 
         //# if token is valid then we will update user's verified field with true
-        await User.updateOne({_id: user._id}, { $set: { verified: true } })
+        await User.updateOne({ _id: user._id }, { $set: { verified: true } })
         //# after verifying the account we will delete the token document
         // await verifyToken.remove()
         await Token.findByIdAndRemove(verifyToken.userId)
@@ -220,10 +220,59 @@ router.get("/user/:id/verify/:token", async (req, res) => {
     }
 })
 
+router.get('/verify-link-resend/:id', auth, async (req, res) => {
+    const id = req.params.id
+    let token = await Token.findOne({ userId: id })
+    console.log(req.user._id)
+    try {
+        if (!token) {
+            token = await new Token({
+                userId: id,
+                token: crypto.randomBytes(32).toString('hex')
+            }).save()
+            // info:- generating link for sending in the email
+            //                                         /:id          /verify/ :token
+            const link = `${process.env.BASE_URL}/user/${id}/verify/${token.token}`
+            //* now we will send email with the verification link
+            await sendEmail(req.user.email, link, req.user.firstName)
+            return res.status(201).json({
+                message: "An email sent to your account please verify"
+            })
+        } else {
+            return res.status(201).json({
+                message: "An email has already been sent to you. Please check and verify."
+            })
+        }
+    } catch (error) {
+        return res.status(201).json({
+            error: error.message
+        })
+    }
+
+
+
+})
 router.get("/me", auth, async (req, res) => {
     return res
         .status(200)
-        .json({ user:req.user });
+        .json({ user: req.user });
+})
+
+router.patch('/profile-pic',auth, async (req, res) => {
+    const imageUrl = req.body.imageUrl
+    try {
+        await User.updateOne({ _id: req.user._id }, { $set: { userPhoto: imageUrl } })
+        return res.status(200)
+            .json({
+                      message:"Profile picture updated successfully"
+                  })
+    } catch (error) {
+        console.log(error)
+        return res.status(404)
+            .json({
+                error: error.message
+            })
+    }
 })
 
 module.exports = router

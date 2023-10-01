@@ -18,12 +18,12 @@ module.exports = async (email, link, name) => {
             to: email,
             subject: "Account Verification",
             html: `<div>
-            <p>Welcome ${name}</p>
-            <p>Click on to the below link to activate your account</p>
-            <a href=${link}>Please verify your account</a>
+            <p>Welcome <strong>${name}<strong/></p>
+            <p>Click on to the below link to verify your account</p>
+            <a href=${link}>Verify your account</a>
             <br/>
-            <p>The link will expire within 1hr from now.</p>
-            <p>If it's expired. Please reverify by going to the profile section on <strong>Shopping Hub</strong> portal</p>
+            <p>The link will <strong>expire<strong/> within 1hr from now.</p>
+            <p>If it's expired. Please reverify by going on to the profile section on <strong>Shopping Hub</strong> portal.</p>
             </div>`
         })
         console.log("email sent successfully")
