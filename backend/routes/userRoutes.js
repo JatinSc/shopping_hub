@@ -258,7 +258,8 @@ router.get("/me", auth, async (req, res) => {
         .json({ user: req.user });
 })
 
-router.patch('/profile-pic',auth, async (req, res) => {
+// info :- API for profile pic update
+router.patch('/profile/dp',auth, async (req, res) => {
     const imageUrl = req.body.imageUrl
     try {
         await User.updateOne({ _id: req.user._id }, { $set: { userPhoto: imageUrl } })
@@ -266,6 +267,24 @@ router.patch('/profile-pic',auth, async (req, res) => {
             .json({
                       message:"Profile picture updated successfully"
                   })
+    } catch (error) {
+        console.log(error)
+        return res.status(404)
+            .json({
+                error: error.message
+            })
+    }
+})
+
+// info :- API for gender and address update
+router.patch('/profile/update', auth, async (req, res) => {
+    const {gender,address} = req.body
+    try {
+        await User.updateOne({ _id: req.user._id }, { $set: { gender: gender,address:address } })
+        return res.status(200)
+            .json({
+                message: "Profile updated successfully"
+            })
     } catch (error) {
         console.log(error)
         return res.status(404)
