@@ -18,6 +18,11 @@ module.exports = (req, res, next) => {
                 }
 
                 const user = await User.findOne({ _id: payload._id }).select("-password");
+                if (!user) {
+                    return res.status(403)
+                        .json({ error: "Forbidden 🛑🛑" });
+                         
+                }
                 // # we are removing password by using select {-} sign indicates that we don't want that, because we don't want to show 
                 req.user = user;
                 next(); // # this will jump onto our routes

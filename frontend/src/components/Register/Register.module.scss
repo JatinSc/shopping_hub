@@ -1,13 +1,12 @@
 .authContainer {
   background-color: white;
   width: 100%;
-  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 
-  h2{
+  h2 {
     color: rgb(39, 39, 39);
     margin-bottom: 20px;
   }
@@ -15,10 +14,10 @@
     width: 400px;
     display: flex;
     padding: 20px;
-border-radius: 20px;
+    border-radius: 20px;
     flex-direction: column;
     gap: 20px;
-     box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.1);
 
     .formGroup {
       @media (max-width: 768px) {
@@ -51,31 +50,31 @@ border-radius: 20px;
         border-radius: 5px;
         border: 1px solid rgb(178, 176, 176);
         outline: none;
+        font-size: 14px;
       }
 
       & img {
         position: absolute;
-        top: 34px;
+        top: 40px;
         left: 10px;
         width: 20px;
       }
 
       .userImg {
-        top: 36px;
+        top: 38px;
         left: 9px;
         width: 24px;
       }
     }
 
     #password {
-      
-      label{
+      label {
         display: flex;
-      flex-direction: row;
-      row-gap: 10px;
-      align-items: center;
+        flex-direction: row;
+        row-gap: 10px;
+        align-items: center;
       }
-      img{
+      img {
         top: 40px;
       }
       #visible {
@@ -101,6 +100,9 @@ border-radius: 20px;
       color: white;
       background-color: black;
       align-self: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       &:hover {
         cursor: pointer;

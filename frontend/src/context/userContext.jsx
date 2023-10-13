@@ -70,6 +70,7 @@ export const UserProvider = ({ children }) => {
                 })
                 console.log(user)
                 navigate('/', { replace: true })
+                return false
 
             } else {
                 toast.error(result.error, {
@@ -80,9 +81,12 @@ export const UserProvider = ({ children }) => {
                         secondary: 'white',
                     },
                 })
+
+                return false
             }
         } catch (error) {
             console.log(error)
+            return false
         }
     }
 
@@ -106,6 +110,7 @@ export const UserProvider = ({ children }) => {
                     },
                 })
                 navigate('/login', { replace: true });
+                return false
             } else {
                 toast.error(result.error, {
                     duration: 5000,
@@ -115,9 +120,11 @@ export const UserProvider = ({ children }) => {
                         secondary: 'white',
                     },
                 })
+                return false
             }
         } catch (error) {
             console.log(error)
+            return false
         }
 
     }

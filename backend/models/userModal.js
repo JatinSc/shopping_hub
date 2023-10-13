@@ -16,9 +16,19 @@ const userSchema = new mongoose.Schema({
     storeLogo: { type: String, default: null }, // URL or file path to the store's logo
     storeName: { type: String, default: null }, // Name of the user's store (if applicable)
     storeBanner: { type: String, default: null },
-    createdAt: { type: Date, default: Date.now },
+    joined: {
+        type: String, default: new Date().toLocaleDateString(
+            'en-gb',
+            {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                timeZone: 'utc'
+            }
+        )
+    },
     updatedAt: { type: Date, default: Date.now },
-    verified: { type: Boolean, default: false }
+    verified: { type: Boolean, default: false },
 });
 
 // Create a User model

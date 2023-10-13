@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react'
-import user from './user.png'
 import email from './email.svg'
 import lock from './lock.svg'
 import { NavLink } from 'react-router-dom'
@@ -7,6 +6,7 @@ import css from './Login.module.scss'
 import UseAnimations from "react-useanimations";
 import visibility from 'react-useanimations/lib/visibility';
 import userContext from '../../context/userContext'
+import { Oval } from 'react-loader-spinner'
 
 const Login = () => {
   const {loginUser} = useContext(userContext)
@@ -14,15 +14,19 @@ const Login = () => {
     email: "",
     password:""
   })
+  const [loading,setLoading] = useState(false)
 
-  const handelSubmit = (e) => {
+  const handelSubmit = async (e) => {
+    setLoading(true)
     e.preventDefault()
-    loginUser(credentials)
+    const result = await loginUser(credentials)
+    if(result == false)
+    setLoading(false)
   }
   const [visible,setVisible] = useState(false)
   return (
     <div className={css.authContainer}>
-      <h2>Register Here</h2>
+      <h2>Sign In Here</h2>
       <div className={css.container}>
         <div className={css.formGroup}>
           <label htmlFor="email">Email</label>
@@ -45,7 +49,20 @@ const Login = () => {
           <img src={lock} alt="password" />
           <UseAnimations speed={3} id={css.visible} animation={visibility} size={25} onClick={() => setVisible(!visible)} />
         </div><br />
-        <button className={css.signBtn} onClick={handelSubmit}>Sign in</button>
+        <button className={css.signBtn} onClick={handelSubmit}>
+          {loading ? <Oval
+            height={30}
+            width={30}
+            color="#ffffff"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={loading}
+            ariaLabel='oval-loading'
+            secondaryColor="#cecece"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+
+          /> : "Sign in"}</button>
         <div className={css.signUp}>
           <p id={css.p}>Don't have an account ? <NavLink className={css.NavLink} to='/register'>Sign up</NavLink></p></div>
       </div>
