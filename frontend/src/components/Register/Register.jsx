@@ -81,12 +81,12 @@ const Register = () => {
                     {loading ? <Oval
                         height={30}
                         width={30}
-                        color="#ffffff"
+                        color="black"
                         wrapperStyle={{}}
                         wrapperClass=""
                         visible={loading}
                         ariaLabel='oval-loading'
-                        secondaryColor="#cecece"
+                        secondaryColor="white"
                         strokeWidth={2}
                         strokeWidthSecondary={2}
 

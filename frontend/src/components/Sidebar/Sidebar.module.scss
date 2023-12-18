@@ -1,14 +1,47 @@
-.sidebarOpen{
-    width: 300px;
-    min-height: calc(100vh - 50px); // 50px is the height of navbar
-    background-color: rgb(73, 72, 72);
-    transition: ease-in-out 500ms;
-
+.sidebarOpen {
+  width: 300px;
+  min-height: calc(100vh - 50px); // 50px is the height of navbar
+  background-color: rgb(255, 255, 255);
+  transition: ease-in-out 400ms;
+  position: absolute;
+  top: 50px;
+  left: 0;
+  overflow: hidden;
+  color: rgb(0, 0, 0);
+  border-right: 1px solid rgb(231, 231, 231);
+  z-index: 3;
 }
 
-.sidebarClose{
-    width: 0px;
-    min-height: calc(100vh - 50px); // 50px is the height of navbar
-    background-color: rgb(63, 63, 63);
-     transition: ease-in-out 500ms;
+.sidebarClose {
+  width: 0px;
+  min-height: calc(100vh - 50px); // 50px is the height of navbar
+  background-color: rgb(255, 255, 255);
+  transition: ease-in-out 400ms;
+  position: absolute;
+  top: 50px;
+  left: -200;
+  overflow: hidden;
+  z-index: 3;
 }
+
+ul {
+    text-decoration: none;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    li {
+      border-bottom: 1px solid rgb(244, 244, 244);
+      width: 100%;
+      height: 40px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      &:hover{
+        background-color: rgb(230, 230, 230);
+        cursor: pointer;
+      }
+    }
+  }

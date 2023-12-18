@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useRef, useState, useEffect } from 'react'
 import css from './Profile.module.scss'
 import userContext from '../../context/userContext'
 import toast from 'react-hot-toast';
@@ -9,10 +9,11 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import data from '../../assets/CountriesList.json'
+import '../../styles/global.scss'
 
 const Profile = () => {
   const base_URL = import.meta.env.VITE_BACKEND_BASE_URL;
-  const { user } = useContext(userContext)
+  const { user,setUser } = useContext(userContext)
   const [image, setImage] = useState(null)
   const [profileData, setProfileData] = useState({ gender: "", address: { street: "", state: "", country: "", postalCode: "" } })
   const [dpLoading, setDpLoading] = useState(false)
@@ -52,12 +53,8 @@ const Profile = () => {
           secondary: 'white',
         },
       })
+      setUser({ ...user, userPhoto:imageUrl})
       setImage(prev => null)
-      setTimeout(async () => {
-        window.location.reload();
-        setDpLoading(false)
-      }, 3000);
-
     } else {
       toast.error(result.error, {
         duration: 5000,
@@ -147,6 +144,7 @@ const Profile = () => {
             secondary: 'white',
           },
         })
+        setUser({...user,gender:profileData.gender,address:profileData.address})
         setIsEditingProfile(false)
       } else {
         toast.error(result.error, {
@@ -301,50 +299,51 @@ const Profile = () => {
             </Button>
           </Modal.Footer>
         </Modal> : null}
-      <div className={css.top_section}>
+      <div className={`xPaddings ${css.profile}`}>
         <div className={css.dp}>
           <img src={image ? URL.createObjectURL(image) : (user?.userPhoto ? user?.userPhoto : "../../../public/user.png")} alt="profile" />
+          <div className={css.dpEdit}>
+            <img src="../../../public/edit.svg" alt="edit" onClick={handelImageClick} />
+            <input style={{ display: "none" }} type="file" accept="image/*" ref={imageRef} onChange={(e) => setImage((prev) => e.target.files[0])} />
+            {image ? <div className={css.action}>
+              {dpLoading ? <RotatingLines
+                strokeColor="grey"
+                strokeWidth="5"
+                animationDuration=".75"
+                width="40"
+                visible={true}
+              /> : (<> <button onClick={(e) => saveImage(e)}>Save</button>
+                <button onClick={(e) => { setImage(null), setDpLoading(false) }}>Cancel</button></>)}
+            </div> : null}
+          </div>
+          <div className={css.info}>
+            <p>{user?.firstName} {user?.lastName}</p>
+            <p>{user?.email}{user?.verified ? <img title="verified" src='../../../public/verified.gif' /> : <button onClick={() => sendVerifyLink(user?._id)}>verify</button>}</p>
+            <p>Active since : {user?.joined.slice(2)}</p>
+          </div>
         </div>
         {/* <i class='bx bxs-edit' style='color:#011629' ></i> */}
-        <div className={css.edit}>
-          <img src="../../../public/edit.svg" alt="edit" onClick={handelImageClick} />
-          <input style={{ display: "none" }} type="file" accept="image/*" ref={imageRef} onChange={(e) => setImage((prev) => e.target.files[0])} />
-        </div>
-        <div className={css.info}>
-          <p>{user?.firstName} {user?.lastName}</p>
-          <p>{user?.email}{user?.verified ? <img title="verified" src='../../../public/verified.gif' /> : <button onClick={() => sendVerifyLink(user?._id)}>verify</button>}</p>
-          <p>Active since : { user?.joined.slice(2)}</p>
-        </div>
-        <button className={css.editProfile} onClick={() => { setIsEditingProfile(prev => !isEditingProfile), setProfileData({ ...profileData, address: user.address, gender: user.gender }) }}>
+        
+        
+        <button className={css.editBtn} onClick={() => { setIsEditingProfile(prev => !isEditingProfile), setProfileData({ ...profileData, address: user.address, gender: user.gender }) }}>
           Edit profile
         </button>
-        <div className={css.top_section_lower}>
+        <div className={css.middle_section}>
+          <div className={css.sections}>
+            <p>Gender</p>
+            <p className='flexCenter'>{user?.gender ? user?.gender : "Please edit your profile"}</p>
+          </div>
+          <div className={css.sections}>
+            <p>Address</p>
+            <p className='flexCenter'>{user?.address ? `${user?.address.street}, ${user?.address.state}, ${user?.address.postalCode}, ${user?.address.country}` : "Please edit your profile"}</p>
+          </div>
+        </div>
+      </div>
+      
+      
+      {/* <div className={css.bottom_section}>
 
-          {image ? <div className={css.action}>
-            {dpLoading ? <RotatingLines
-              strokeColor="grey"
-              strokeWidth="5"
-              animationDuration=".75"
-              width="40"
-              visible={true}
-            /> : (<> <button onClick={(e) => saveImage(e)}>Save</button>
-              <button onClick={(e) => { setImage(null), setDpLoading(false) }}>Cancel</button></>)}
-          </div> : null}
-        </div>
-      </div>
-      <div className={css.middle_section}>
-        <div className={css.sections}>
-          <p>Gender</p>
-          <p className='flexCenter'>{user?.gender ? user?.gender : "Please edit your profile"}</p>
-        </div>
-        <div className={css.sections}>
-          <p>Address</p>
-          <p className='flexCenter'>{user?.address ? `${user?.address.street}, ${user?.address.state}, ${user?.address.postalCode}, ${user?.address.country}` : "Please edit your profile"}</p>
-        </div>
-      </div>
-      <div className={css.bottom_section}>
-
-      </div>
+      </div> */}
     </div>
   )
 }

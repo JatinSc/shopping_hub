@@ -1,5 +1,5 @@
 .authContainer {
-  background-color: white;
+  background-color: transparent;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -11,7 +11,7 @@
     margin-bottom: 20px;
   }
   .container {
-    width: 400px;
+    width: 500px;
     display: flex;
     padding: 20px;
     border-radius: 20px;
@@ -48,9 +48,15 @@
         width: 100%;
         height: 35px;
         border-radius: 5px;
-        border: 1px solid rgb(178, 176, 176);
+        background-color: rgba(216, 216, 216, 0.111);
+        color: black;
+        border: none;
         outline: none;
         font-size: 14px;
+
+        &::placeholder {
+          color: rgb(125, 125, 125);
+        }
       }
 
       & img {
@@ -96,16 +102,17 @@
       width: 300px;
       height: 40px;
       border-radius: 10px;
-      border: 1px solid black;
-      color: white;
-      background-color: black;
+      border: none;
+      color: #ffffff;
+      background-color: rgb(41, 41, 41);
       align-self: center;
       display: flex;
       justify-content: center;
       align-items: center;
-
+      transition: ease-in-out 300ms;
       &:hover {
         cursor: pointer;
+        transform: translateY(-2px);
       }
     }
 
@@ -115,13 +122,13 @@
       align-items: center;
 
       #p {
-        color: rgb(75, 74, 74);
-        font-weight: 500;
+        color: rgb(123, 123, 123);
+        font-weight: 300;
       }
 
       .NavLink {
         text-decoration: underline;
-        color: rgb(0, 0, 0);
+        color: rgb(54, 54, 54);
         font-weight: 500;
       }
     }

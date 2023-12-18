@@ -9,21 +9,21 @@ import userContext from '../../context/userContext'
 import { Oval } from 'react-loader-spinner'
 
 const Login = () => {
-  const {loginUser} = useContext(userContext)
+  const { loginUser } = useContext(userContext)
   const [credentials, setCredentials] = useState({
     email: "",
-    password:""
+    password: ""
   })
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const handelSubmit = async (e) => {
     setLoading(true)
     e.preventDefault()
     const result = await loginUser(credentials)
-    if(result == false)
-    setLoading(false)
+    if (result == false)
+      setLoading(false)
   }
-  const [visible,setVisible] = useState(false)
+  const [visible, setVisible] = useState(false)
   return (
     <div className={css.authContainer}>
       <h2>Sign In Here</h2>
@@ -53,12 +53,12 @@ const Login = () => {
           {loading ? <Oval
             height={30}
             width={30}
-            color="#ffffff"
+            color="black"
             wrapperStyle={{}}
             wrapperClass=""
             visible={loading}
             ariaLabel='oval-loading'
-            secondaryColor="#cecece"
+            secondaryColor="white"
             strokeWidth={2}
             strokeWidthSecondary={2}
 

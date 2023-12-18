@@ -20,7 +20,7 @@ export const UserProvider = ({ children }) => {
             const res = await fetch("http://127.0.0.1:8000/me", {
                 method: "GET",
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    Authorization: `Bearer ${localStorage.getItem("Shopping_Hub_Token")}`,
                 },
             });
             const result = await res.json();
@@ -58,7 +58,7 @@ export const UserProvider = ({ children }) => {
             const result = await res.json();
             if (!result.error) {
                 // console.log(result)
-                localStorage.setItem("token", result.token)
+                localStorage.setItem("Shopping_Hub_Token", result.token)
                 setUser(result.user)
                 toast.success(result.message, {
                     duration: 3000,
